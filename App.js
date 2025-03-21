@@ -1,49 +1,33 @@
-import React, { useState } from "react";
-import { Text, View, Image, TextInput, TouchableOpacity } from "react-native"
-import { loginstyle } from "./src/styles/MainStyle";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import RegisterScreen from './src/screen/RegisterScreen';
+import LoginScreen from './src/screen/LoginScreen';
+import WelcomeScreen from './src/screen/WelcomeScreen';
+import HomePageScreen from './src/screen/HomepageScreen';
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [username,setUsername]=useState(' ')
-  const [firstname,setFirstname]=useState(' ')
-
-  const handlePress=()=>{
-    setUsername('aribayag')
-  }
   return (
-      <View style={loginstyle.container}>
-        <Image
-        style={loginstyle.ImageContainer}
-        source={require("./src/assets/sheesh.webp")}>
-
-
-        </Image>
-
-        <TextInput
-        style={loginstyle.TextInput}
-        value = {username}
-        onChangeText={(text) => setUsername(text)}>
-
-        </TextInput>
-        <TextInput
-        style={loginstyle.TextInput}
-        value = {firstname}
-        onChangeText={(text) => setFirstname(text)}>
-
-        </TextInput>
-
-        <TouchableOpacity onPress={handlePress}>
-          <Image
-            style={loginstyle.ImageContainer}
-            source={require("./src/assets/sheesh.webp")}
-          />
-        </TouchableOpacity>
-
-
-      <Text>
-        hello WORLD
-      </Text>
-      </View>
+    <SafeAreaProvider style={{ flexGrow: 1 }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="WelcomeScreen" // Directly navigate to WelcomeScreen
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="HomepageScreen" component={HomePageScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
-}
+};
 
-export default App
+export default App;
